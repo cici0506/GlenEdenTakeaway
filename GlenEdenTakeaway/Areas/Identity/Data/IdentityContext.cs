@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using GlenEdenTakeaway.Models;
 
 namespace GlenEdenTakeaway.Areas.Identity.Data;
 
@@ -33,6 +34,18 @@ public class IdentityContext : IdentityDbContext<GlenEdenTakeawayUser>
             
 
     }
+    
+    public DbSet<GlenEdenTakeaway.Models.Customer> Customer { get; set; } = default!;
+    
+    public DbSet<GlenEdenTakeaway.Models.Employee> Employee { get; set; } = default!;
+    
+    public DbSet<GlenEdenTakeaway.Models.Menu> Menu { get; set; } = default!;
+    
+    public DbSet<GlenEdenTakeaway.Models.Order> Order { get; set; } = default!;
+    
+    public DbSet<GlenEdenTakeaway.Models.Payment> Payment { get; set; } = default!;
+    
+    public DbSet<GlenEdenTakeaway.Models.PaymentType> PaymentType { get; set; } = default!;
 
 
 }

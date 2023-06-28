@@ -27,23 +27,23 @@ namespace GlenEdenTakeaway.Areas.Identity.Pages.Account
         private readonly SignInManager<GlenEdenTakeawayUser> _signInManager;
         private readonly UserManager<GlenEdenTakeawayUser> _userManager;
         private readonly IUserStore<GlenEdenTakeawayUser> _userStore;
-        private readonly IUserEmailStore<GlenEdenTakeawayUser> _emailStore;
+        private readonly IUserEmailStore<GlenEdenTakeawayUser> _EmailStore;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
+        private readonly IEmailSender _EmailSender;
 
         public RegisterModel(
             UserManager<GlenEdenTakeawayUser> userManager,
             IUserStore<GlenEdenTakeawayUser> userStore,
             SignInManager<GlenEdenTakeawayUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender EmailSender)
         {
             _userManager = userManager;
             _userStore = userStore;
-            _emailStore = GetEmailStore();
+            _EmailStore = GetEmailStore();
             _signInManager = signInManager;
             _logger = logger;
-            _emailSender = emailSender;
+            _EmailSender = EmailSender;
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace GlenEdenTakeaway.Areas.Identity.Pages.Account
 
 
              await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
-                await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                await _EmailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
@@ -145,12 +145,12 @@ namespace GlenEdenTakeaway.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId, code, returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                    await _EmailSender.SendEmailAsync(Input.Email, "Confirm your Email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl });
+                        return RedirectToPage("RegisterConfirmation", new { Email = Input.Email, returnUrl });
                     }
                     else
                     {
@@ -186,7 +186,7 @@ namespace GlenEdenTakeaway.Areas.Identity.Pages.Account
         {
             if (!_userManager.SupportsUserEmail)
             {
-                throw new NotSupportedException("The default UI requires a user store with email support.");
+                throw new NotSupportedException("The default UI requires a user store with Email support.");
             }
             return (IUserEmailStore<GlenEdenTakeawayUser>)_userStore;
         }

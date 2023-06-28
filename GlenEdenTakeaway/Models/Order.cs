@@ -1,8 +1,11 @@
-﻿namespace GlenEdenTakeaway.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace GlenEdenTakeaway.Models
 {
     public class Order
     {
         public int OrderId { get; set; }
+        [DataType(DataType.Date)]
         public DateTime OrderDate { get; set; }
         public string Quantity { get; set; }
         public string ItemName { get; set; }
